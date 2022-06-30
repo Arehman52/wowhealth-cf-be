@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Data</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid white;
+        border-radius: 3px;
+        padding: 10px 20px;
+        text-align: center;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        background-color: #96d4d4;
+      }
+    </style>
+  </head>
+  <body>
+    <h3 style="text-align: center">
+      Following table has the data fed into Registration form
+    </h3>
+    <table style="border: 1px solid black">
+      <th>userID</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>State</th>
+      <th>Zip Code</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Service Availing</th>
+      <tbody id="tbViewTable"></tbody>
+    </table>
+
+    <script>
+      let tbViewTable = document.getElementById("tbViewTable");
+      let data = [
+        {
+          userID: 123,
+          Name: "Alex",
+          Address: "Grantville, Pennsylvania(PA), 17028",
+          state: "PA",
+          zip: "43211",
+          Email: "alex@gmail.com",
+          Gender: "Male",
+          Age: 23,
+          serviceAvailing: "Telemedicine",
+        },
+
+        {
+          userID: 124,
+          Name: "Parker",
+          Address: "Grantville, Pennsylvania(CA), 17028",
+          state: "CA",
+          zip: "21333",
+          Email: "Parker@gmail.com",
+          Gender: "Male",
+          Age: 29,
+          serviceAvailing: "Teletherapy",
+        },
+
+        {
+          userID: 21312,
+          Name: "John",
+          Address: "Grantville, Pennsylvania(PA), 17028",
+          state: "PA",
+          zip: "43211",
+          Email: "John@gmail.com",
+          Gender: "Male",
+          Age: 53,
+          serviceAvailing: "Dental Care",
+        },
+
+        {
+          userID: 342441,
+          Name: "David",
+          Address: "Grantville, Pennsylvania(PA), 17028",
+          state: "PA",
+          zip: "43211",
+          Email: "David@gmail.com",
+          Gender: "Male",
+          Age: 23,
+          serviceAvailing: "Urgent Care",
+        },
+
+        {
+          userID: 130,
+          Name: "Anna",
+          Address: "Grantville, Pennsylvania(PA), 17028",
+          state: "PA",
+          zip: "43211",
+          Email: "Anna@gmail.com",
+          Gender: "Female",
+          Age: 43,
+          serviceAvailing: "Urgent Care",
+        },
+      ];
+
+      
+      data.forEach((e) =>{
+          let tr = document.createElement('tr');
+          createTDs(e.userID ,tr);
+          createTDs(e.Name ,tr);
+          createTDs(e.Address ,tr);
+          createTDs(e.state ,tr);
+          createTDs(e.zip ,tr);
+          createTDs(e.Email ,tr);
+          createTDs(e.Gender ,tr);
+          createTDs(e.Age ,tr);
+          createTDs(e.serviceAvailing ,tr);
+          tbViewTable.appendChild(tr);
+      });
+      
+      function createTDs(innerhtml ,tr){
+        let td = document.createElement('td');
+          td.innerHTML = innerhtml;
+          tr.appendChild(td);
+      }
+    </script>
+  </body>
+</html>
