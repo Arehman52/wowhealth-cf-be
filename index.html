@@ -191,6 +191,7 @@
         Object.assign(reqForm, {'username': username.value}); 
         Object.assign(reqForm, {'age': age.value}); 
         Object.assign(reqForm, {'address': address.value}); 
+        Object.assign(reqForm, {'state': state.value}); 
         Object.assign(reqForm, {'zip': zip.value}); 
         Object.assign(reqForm, {'email': email.value}); 
         Object.assign(reqForm, {'gender': gender.value}); 
@@ -204,10 +205,16 @@
         fetch("http://localhost:3000/us/submitForm",
         {
             method: "POST",
-            body: JSON.parse(JSON.stringify(reqForm))
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqForm)
         })
         .then(function(res){ return res.json(); })
-        .then(function(data){ console.log(JSON.stringify(data)) });
+        .then(function(data){ 
+          console.log(JSON.stringify(data));
+          form.reset();
+         });
         }
     </script>
   </body>
