@@ -1,52 +1,214 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8">
-<title>JavaScript Form Validation using a sample registration form</title>
-<meta name="keywords" content="example, JavaScript Form Validation, Sample registration form" />
-<meta name="description" content="This document is an example of JavaScript Form Validation using a sample registration form. " />
-
-</head>
-<body onload="document.registration.userid.focus();">
-<h1>the Registration Form</h1>
-Use tab keys to move from one input field to the next.
-<form name='registration'>
-<ul>
-<li><label for="userid">User id:</label></li>
-<li><input type="text" name="userid" size="12" /></li> 
-<small>if no id provided, we will assign one!</small>
-<br><br>
-<li><label for="passid">Password:</label></li>
-<li><input type="password" name="passid" size="12" /></li> <br><br>
-<li><label for="username">Name:</label></li>
-<li><input type="text" name="username" size="50" /></li> <br><br>
-<li><label for="address">Address:</label></li>
-<li><input type="text" name="address" size="50" /></li> <br><br>
-<li><label for="country">Country:</label></li>
-<li><select name="country">
-<option selected="" value="Default">(Please select a country)</option>
-<option value="AF">Australia</option>
-<option value="AL">Canada</option>
-<option value="DZ">India</option>
-<option value="AS">Russia</option>
-<option value="AD">USA</option>
-</select></li> <br><br>
-<li><label for="zip">ZIP Code:</label></li>
-<li><input type="text" name="zip" /></li> <br><br>
-<li><label for="email">Email:</label></li>
-<li><input type="text" name="email" size="50" /></li> <br><br>
-<li><label id="gender">Sex:</label></li>
-<li><input type="radio" name="msex" value="Male" /><span>Male</span></li>
-<li><input type="radio" name="fsex" value="Female" /><span>Female</span></li> <br><br>
-<li><label>Language:</label></li>
-<li><input type="checkbox" name="en" value="en" checked /><span>English</span></li>
-<li><input type="checkbox" name="nonen" value="noen" /><span>Non English</span></li> <br><br>
-<li><label for="desc">About:</label></li>
-<li><textarea name="desc" id="desc"></textarea></li>
-<li><button type="button" name="submit" value="Submit" onClick="formValidation()" >click to submit</button></li>
-</ul>
-</form>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Registration Form</title>
+    <meta
+      name="keywords"
+      content="example, JavaScript Form Validation, Sample registration form"
+    />
+    <style>
+      .Row {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
 
 
+  <body>
+    <h1>the Registration Form</h1>
 
-</body>
+    <br />
+
+    <form name="registration">
+      <div style="width: 100vw" class="topContainer">
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <label for="userid">User id:</label>
+            <input onchange="check()" type="text" name="userid" /> <br />
+            <small style="color: rgb(240, 80, 93); opacity: 0.5"
+              >if no id provided, we will assign one!</small
+            >
+          </div>
+          <div>
+            <label for="username">Name:</label>
+            <input onchange="check()" type="text" name="username" />
+          </div>
+          <div>
+            <label for="age">Age:</label>
+            <input onchange="check()" type="number" id="age" name="age"/>
+          </div>
+        </div>
+        <br />
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <label for="address">Address:</label>
+            <input onchange="check()" type="text" name="address"  />
+          </div>
+          <div>
+            <label for="state">State:</label>
+            <select  onchange="check()"name="state" >
+              <option selected="" value="Default" disabled>
+                (Please select a State)
+              </option>
+              <option value="Alaska">Alaska</option>
+              <option value="Alabama">Alabama</option>
+              <option value="Arkansas">Arkansas</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Massachusetts">Massachusetts</option>
+            </select>
+          </div>
+          <div>
+            <label for="zip">ZIP Code:</label>
+            <input onchange="check()" type="text" name="zip" />
+          </div>
+        </div>
+        <br />
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <label for="email">Email:</label>
+            <input onchange="check()" type="text" name="email"  />
+          </div>
+          <div>
+            <label for="gender">Gender:</label>
+            <input onchange="check()" type="radio" name="gender" value="Male" checked  /><span
+              >Male</span
+            >
+            <input onchange="check()" type="radio" name="gender" value="Female"  /><span
+              >Female</span
+            >
+          </div>
+          <div>
+            <div>
+              <label for="service">Service:</label>
+              <select  onchange="check()"name="service" >
+                <option selected="" value="Default" disabled>
+                  (Please select a Service)
+                </option>
+                <option value="Telemedicine">Telemedicine</option>
+                <option value="Teletherapy">Teletherapy</option>
+                <option value="Dental Care">Dental Care</option>
+                <option value="Urgent Care">Urgent Care</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <br /><br />
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <button
+              type="button"
+              id="submit"
+              disabled
+              name="submit"
+              value="Submit"
+              style="
+                padding: 10px 20px;
+                background: steelblue;
+                border: 1px solid darkgrey;
+                border-radius: 5px;
+              "
+              onclick="submitForm()"
+            >
+              click to submit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="Row" style="color: red; opacity: .6; margin: 30px;" id="errorDiv">.</div>
+    </form>
+
+    <div class="Row">
+        <a href="http://localhost:3000/us/view">View Data</a>
+    </div>
+    
+    <div class="Row" id="showInput">
+    </div>
+
+    <script >
+        
+        function check() {
+            let showInput = document.getElementById('showInput');
+
+          let form = document.forms[0];
+          let { userid, username, age, address, state, zip, email, gender, service } = form;
+    
+          let elementsArray = [userid, username, age, address, state, zip, email, gender, service];
+          showInput.innerHTML = '';
+          elementsArray.forEach(e => {(e?.name && e?.value) ? showInput.innerHTML+= e.name+" : "+e.value+", " : (e[0]?.value) ? showInput.innerHTML+= "Gender : "+e.value+", " : null });
+        let isFormFilled = (userid.value != "" &&
+            username.value != "" &&
+            age.value != "" &&
+            address.value != "" &&
+            state.value != "Default" &&
+            zip.value != "" &&
+            email.value != "" &&
+            gender.value != "" &&
+            service.value != "Default");
+        let submit = document.getElementById("submit");
+        if(isFormFilled) submit.removeAttribute("disabled");
+        else submit.setAttribute("disabled", "true");
+      }
+      
+      function submitForm(){
+        let form = document.registration;
+        let { userid, username, age, address, state, zip, email, gender, service } = form;
+
+        let elementsArray = [userid, username, age, address, state, zip, email, gender, service];
+        
+        let reqForm = {};
+        Object.assign(reqForm, {'userid': userid.value}); 
+        Object.assign(reqForm, {'username': username.value}); 
+        Object.assign(reqForm, {'age': age.value}); 
+        Object.assign(reqForm, {'address': address.value}); 
+        Object.assign(reqForm, {'zip': zip.value}); 
+        Object.assign(reqForm, {'email': email.value}); 
+        Object.assign(reqForm, {'gender': gender.value}); 
+        Object.assign(reqForm, {'service': service.value}); 
+        
+        console.log('reqForm ::::: ',reqForm);
+        //post in API
+        // var data = new FormData();
+        // data.append( "json", reqForm );
+
+        fetch("http://localhost:3000/us/submitForm",
+        {
+            method: "POST",
+            body: JSON.parse(JSON.stringify(reqForm))
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){ console.log(JSON.stringify(data)) });
+        }
+    </script>
+  </body>
 </html>

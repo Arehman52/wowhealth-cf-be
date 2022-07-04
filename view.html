@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>View Data</title>
     <style>
+        .Row{ margin: 30px 10px;}
       table,
       th,
       td {
@@ -38,84 +39,34 @@
       <tbody id="tbViewTable"></tbody>
     </table>
 
+    <div class="Row">
+        <a href="http://localhost:3000/us/register">Register</a>
+    </div>
+
+
     <script>
       let tbViewTable = document.getElementById("tbViewTable");
-      let data = [
-        {
-          userID: 123,
-          Name: "Alex",
-          Address: "Grantville, Pennsylvania(PA), 17028",
-          state: "PA",
-          zip: "43211",
-          Email: "alex@gmail.com",
-          Gender: "Male",
-          Age: 23,
-          serviceAvailing: "Telemedicine",
-        },
-
-        {
-          userID: 124,
-          Name: "Parker",
-          Address: "Grantville, Pennsylvania(CA), 17028",
-          state: "CA",
-          zip: "21333",
-          Email: "Parker@gmail.com",
-          Gender: "Male",
-          Age: 29,
-          serviceAvailing: "Teletherapy",
-        },
-
-        {
-          userID: 21312,
-          Name: "John",
-          Address: "Grantville, Pennsylvania(PA), 17028",
-          state: "PA",
-          zip: "43211",
-          Email: "John@gmail.com",
-          Gender: "Male",
-          Age: 53,
-          serviceAvailing: "Dental Care",
-        },
-
-        {
-          userID: 342441,
-          Name: "David",
-          Address: "Grantville, Pennsylvania(PA), 17028",
-          state: "PA",
-          zip: "43211",
-          Email: "David@gmail.com",
-          Gender: "Male",
-          Age: 23,
-          serviceAvailing: "Urgent Care",
-        },
-
-        {
-          userID: 130,
-          Name: "Anna",
-          Address: "Grantville, Pennsylvania(PA), 17028",
-          state: "PA",
-          zip: "43211",
-          Email: "Anna@gmail.com",
-          Gender: "Female",
-          Age: 43,
-          serviceAvailing: "Urgent Care",
-        },
-      ];
-
-      
-      data.forEach((e) =>{
+      let data = [];
+      fetch('http://localhost:3000/us/getAllFormsData')
+      .then(response => response.json())
+      .then(d => {
+        data = d['form'].reverse();
+        data.forEach((e) =>{
           let tr = document.createElement('tr');
-          createTDs(e.userID ,tr);
-          createTDs(e.Name ,tr);
-          createTDs(e.Address ,tr);
+          createTDs(e._id ,tr);
+          createTDs(e.username ,tr);
+          createTDs(e.address ,tr);
           createTDs(e.state ,tr);
           createTDs(e.zip ,tr);
-          createTDs(e.Email ,tr);
-          createTDs(e.Gender ,tr);
-          createTDs(e.Age ,tr);
-          createTDs(e.serviceAvailing ,tr);
+          createTDs(e.email ,tr);
+          createTDs(e.gender ,tr);
+          createTDs(e.age ,tr);
+          createTDs(e.service ,tr);
           tbViewTable.appendChild(tr);
       });
+    });
+
+      
       
       function createTDs(innerhtml ,tr){
         let td = document.createElement('td');

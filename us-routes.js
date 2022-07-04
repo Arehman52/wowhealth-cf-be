@@ -1,12 +1,6 @@
 import express from 'express';
 import ejs from 'ejs';
-import path from 'path';
-import * as fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import FormI from './form.model.js';
 
 const router = express.Router();
 
@@ -21,14 +15,6 @@ const USERS = [
 
 
 router.get("/register", (req,res)=>{
-  // console.log('isisisisi');
-  // if(req.url === '/register' ){
-  //   console.log('isisisisi   2');
-  //   res.writeHead(200, {'Content-type' : 'text/html'});
-  //   fs.createReadStream(path.join(path.join(__dirname,'script.js'),'split.css'), 'utf8' ).pipe(res);
-  // }
-
-
   ejs.renderFile('index.html', {}, 
     {}, (err, template) => {
 
@@ -49,6 +35,73 @@ router.get("/view", (req,res)=>{
         res.end(template);
     }
   });
+});
+
+
+
+router.get("/getAllFormsData", (req, res, next) => {
+  FormI.find()
+    .then((document) => {
+      res.status(200).json({
+        message: "Fetched All form's data!",
+        form: document,
+      });
+    })
+    .catch((err) => {
+      console.log("GET /getAllFormsData\n", err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
+
+
+router.post("/getFormData", (req, res, next) => {
+  FormI.findOne({ userId: req.body.userId })
+    .then((document) => {
+      res.status(200).json({
+        message: "Fetched the form for userId = "+req.body.userId,
+        form: document,
+      });
+    })
+    .catch((err) => {
+      console.log("POST /getFormData\n", err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
+
+
+router.post("/submitForm", (req,res)=>{
+  const formI = new FormI({
+    userId: req.body.userId,
+    username: req.body.username, 
+    age: req.body.age, 
+    address: req.body.address, 
+    state: req.body.state, 
+    zip: req.body.zip, 
+    email: req.body.email, 
+    gender: req.body.gender, 
+    service: req.body.service
+  });
+
+  console.log('JSON.stringify(formI) : ',JSON.stringify(formI))
+  console.log('JSON.stringify(req.body) : ',JSON.stringify(req.body))
+
+  formI
+    .save()
+    .then((result) => {
+      res.status(201).json({
+        message: "Form Created Successfuly",
+        result: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+      });
+    });
 });
 
 router.get("/getUsers", (req, res, next) => {
