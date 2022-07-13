@@ -52,7 +52,7 @@ router.get("/view",(req,res)=>{
       console.log(err); 
         throw err;
     } else {
-        // res.end(template);
+        res.end(template);
     }
   });
 });
