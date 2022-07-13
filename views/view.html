@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Data</title>
+    <style>
+        .Row{ margin: 30px 10px;}
+      table,
+      th,
+      td {
+        border: 1px solid white;
+        border-radius: 3px;
+        padding: 10px 20px;
+        text-align: center;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        background-color: #96d4d4;
+      }
+    </style>
+  </head>
+  <body onload="AfterViewInit()">
+    <h3 style="text-align: center; border: 3px solid teal; border-radius: 5px; padding: 20px;">
+      Following table has the data fed into Registration form
+    </h3>
+    <table style="border: 1px solid black">
+      <th>userID</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>State</th>
+      <th>Zip Code</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>Service Availing</th>
+      <tbody id="tbViewTable"></tbody>
+    </table>
+
+    <div class="Row">
+        <a id="cfRegister" href="https://us-central1-wowhealth-nodejs.cloudfunctions.net/wowhealth-nodejs-function/us/register">Register</a>
+        <a id="localhostRegister" href="http://localhost:3000/us/register">Register</a>
+    </div>
+
+
+    <script>
+      function AfterViewInit(){ 
+        var newBase = document.createElement("base");
+        if(document.location.href.includes('localhost')){
+          newBase.setAttribute("href", document.location.origin);
+          document.getElementById('cfRegister').setAttribute('hidden','true');
+        }else{
+          newBase.setAttribute("href", "https://us-central1-wowhealth-nodejs.cloudfunctions.net/wowhealth-nodejs-function/");
+          document.getElementById('localhostRegister').setAttribute('hidden','true');
+        }
+        document.getElementsByTagName("head")[0].appendChild(newBase);
+        console.dir(newBase);
+      }
+      let tbViewTable = document.getElementById("tbViewTable");
+      let data = [];
+      let baseURL = document.location.origin;
+      fetch(baseURL+'/us/getAllFormsData')
+      .then(response => response.json())
+      .then(d => {
+        data = d['form'].reverse();
+        data.forEach((e) =>{
+          let tr = document.createElement('tr');
+          createTDs(e._id ,tr, true);
+          createTDs(e.username ,tr, false);
+          createTDs(e.address ,tr, false);
+          createTDs(e.state ,tr, false);
+          createTDs(e.zip ,tr, false);
+          createTDs(e.email ,tr, false);
+          createTDs(e.gender ,tr, false);
+          createTDs(e.age ,tr, false);
+          createTDs(e.service ,tr, false);
+          tbViewTable.appendChild(tr);
+      });
+    });
+
+    function deleteRow(e){
+      console.log(e.target.id);
+      let baseURL = document.location.origin;
+      fetch(baseURL+"/us/delete/"+e.target.id,
+        {
+            method: "DELETE"
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){ 
+          console.log(JSON.stringify(data));
+          document.location.reload();
+         });
+        
+    }
+      
+      
+      function createTDs(innerhtml ,tr, isId){
+        let td = document.createElement('td');
+          td.innerHTML = innerhtml;
+          if(isId){
+            //create a button
+            let btnDelete = document.createElement('button');
+            btnDelete.setAttribute('id', innerhtml);
+            btnDelete.innerText = "Del";
+            td.appendChild(document.createElement('br'));
+            btnDelete.addEventListener('click', (e) => deleteRow(e))
+            td.appendChild(btnDelete);
+            // appendChild in td
+          }
+          tr.appendChild(td);
+      }
+    </script>
+  </body>
+</html>

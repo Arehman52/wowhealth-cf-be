@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Registration Form</title>
+    <meta
+      name="keywords"
+      content="example, JavaScript Form Validation, Sample registration form"
+    />
+    <style>
+      .Row {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+
+
+  <body onload="AfterViewInit()">
+    <h1>the Registration Form</h1>
+
+    <br />
+
+    <form name="registration">
+      <div style="width: 100vw" class="topContainer">
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <label for="userid">User id:</label>
+            <input onchange="check()" type="text" name="userid" /> <br />
+            <small style="color: rgb(240, 80, 93); opacity: 0.5"
+              >if no id provided, we will assign one!</small
+            >
+          </div>
+          <div>
+            <label for="username">Name:</label>
+            <input onchange="check()" type="text" name="username" />
+          </div>
+          <div>
+            <label for="age">Age:</label>
+            <input onchange="check()" type="number" id="age" name="age"/>
+          </div>
+        </div>
+        <br />
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <label for="address">Address:</label>
+            <input onchange="check()" type="text" name="address"  />
+          </div>
+          <div>
+            <label for="state">State:</label>
+            <select  onchange="check()"name="state" >
+              <option selected="" value="Default" disabled>
+                (Please select a State)
+              </option>
+              <option value="Alaska">Alaska</option>
+              <option value="Alabama">Alabama</option>
+              <option value="Arkansas">Arkansas</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Massachusetts">Massachusetts</option>
+            </select>
+          </div>
+          <div>
+            <label for="zip">ZIP Code:</label>
+            <input onchange="check()" type="text" name="zip" />
+          </div>
+        </div>
+        <br />
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <label for="email">Email:</label>
+            <input onchange="check()" type="text" name="email"  />
+          </div>
+          <div>
+            <label for="gender">Gender:</label>
+            <input onchange="check()" type="radio" name="gender" value="Male" checked  /><span
+              >Male</span
+            >
+            <input onchange="check()" type="radio" name="gender" value="Female"  /><span
+              >Female</span
+            >
+          </div>
+          <div>
+            <div>
+              <label for="service">Service:</label>
+              <select  onchange="check()"name="service" >
+                <option selected="" value="Default" disabled>
+                  (Please select a Service)
+                </option>
+                <option value="Telemedicine">Telemedicine</option>
+                <option value="Teletherapy">Teletherapy</option>
+                <option value="Dental Care">Dental Care</option>
+                <option value="Urgent Care">Urgent Care</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <br /><br />
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+          "
+          class="Row"
+        >
+          <div>
+            <button
+              type="button"
+              id="submit"
+              disabled
+              name="submit"
+              value="Submit"
+              style="
+                padding: 10px 20px;
+                background: steelblue;
+                border: 1px solid darkgrey;
+                border-radius: 5px;
+              "
+              onclick="submitForm()"
+            >
+              click to submit
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="Row" style="color: red; opacity: .6; margin: 30px;" id="errorDiv">.</div>
+    </form>
+
+    <div class="Row">
+        <a id="cfView" href="https://us-central1-wowhealth-nodejs.cloudfunctions.net/wowhealth-nodejs-function/us/view">View Data</a>
+        <a id="localhostView" href="http://localhost:3000/us/view">View Data</a>
+    </div>
+    
+    <div class="Row" id="showInput">
+    </div>
+
+    <script >
+        function AfterViewInit(){ 
+        var newBase = document.createElement("base");
+        if(document.location.href.includes('localhost')){
+          document.getElementById('cfView').setAttribute('hidden','true');
+          newBase.setAttribute("href", document.location.origin);
+        }else{
+          newBase.setAttribute("href", "https://us-central1-wowhealth-nodejs.cloudfunctions.net/wowhealth-nodejs-function/");
+          document.getElementById('localhostView').setAttribute('hidden','true');
+        }
+        document.getElementsByTagName("head")[0].appendChild(newBase);
+        console.dir(newBase);
+      }
+        function check() {
+            let showInput = document.getElementById('showInput');
+
+          let form = document.forms[0];
+          let { userid, username, age, address, state, zip, email, gender, service } = form;
+    
+          let elementsArray = [userid, username, age, address, state, zip, email, gender, service];
+          showInput.innerHTML = '';
+          elementsArray.forEach(e => {(e?.name && e?.value) ? showInput.innerHTML+= e.name+" : "+e.value+", " : (e[0]?.value) ? showInput.innerHTML+= "Gender : "+e.value+", " : null });
+        let isFormFilled = (userid.value != "" &&
+            username.value != "" &&
+            age.value != "" &&
+            address.value != "" &&
+            state.value != "Default" &&
+            zip.value != "" &&
+            email.value != "" &&
+            gender.value != "" &&
+            service.value != "Default");
+        let submit = document.getElementById("submit");
+        if(isFormFilled) submit.removeAttribute("disabled");
+        else submit.setAttribute("disabled", "true");
+      }
+      
+      function submitForm(){
+        let form = document.registration;
+        let { userid, username, age, address, state, zip, email, gender, service } = form;
+
+        let elementsArray = [userid, username, age, address, state, zip, email, gender, service];
+        
+        let reqForm = {};
+        Object.assign(reqForm, {'userid': userid.value}); 
+        Object.assign(reqForm, {'username': username.value}); 
+        Object.assign(reqForm, {'age': age.value}); 
+        Object.assign(reqForm, {'address': address.value}); 
+        Object.assign(reqForm, {'state': state.value}); 
+        Object.assign(reqForm, {'zip': zip.value}); 
+        Object.assign(reqForm, {'email': email.value}); 
+        Object.assign(reqForm, {'gender': gender.value}); 
+        Object.assign(reqForm, {'service': service.value}); 
+        
+        console.log('reqForm ::::: ',reqForm);
+        //post in API
+        // var data = new FormData();
+        // data.append( "json", reqForm );
+
+        let baseURL = document.location.origin;
+        fetch(baseURL+"/us/submitForm",
+        {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqForm)
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){ 
+          console.log(JSON.stringify(data));
+          form.reset();
+         });
+        }
+    </script>
+  </body>
+</html>

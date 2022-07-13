@@ -1,0 +1,16 @@
+{
+  "name": "sample-http",
+  "version": "0.0.1",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "ss": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "ejs": "^3.1.8",
+    "mongoose": "^6.3.6",
+    "mongoose-unique-validator": "^3.1.0",
+    "nodemon": "^2.0.16"
+   }
+}
