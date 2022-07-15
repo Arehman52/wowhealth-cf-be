@@ -13,12 +13,12 @@ steps:
 #   args: ['run','build']
 
   # logsBucket: 'gs://_Default'
-  # options:
-  #   logging: CLOUD_LOGGING_ONLY 
   # build:
   #   logsBucket: 'gs://_Default'
-  
+
 - name: 'gcr.io/cloud-builders/gcloud'
+  options:
+  logging: CLOUD_LOGGING_ONLY 
   args:
   - gcloud
   - functions
