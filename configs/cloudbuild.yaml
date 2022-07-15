@@ -1,6 +1,6 @@
 steps:
 
-- name: 'https://gcr.io/cloud-builders/git'
+- name: 'https://console.cloud.google.com/gcr/images/cloud-builders/GLOBAL/git'
  args: ['clone', 'https://github.com/Arehman52/wowhealth-cf-be']
 
 - name: 'gcr.io/cloud-builders/git'
