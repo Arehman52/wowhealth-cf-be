@@ -13,6 +13,9 @@ steps:
 #   args: ['run','build']
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  logsBucket: 'gs://_Default'
+  options:
+    logging: CLOUD_LOGGING_ONLY 
   args:
   - gcloud
   - functions
@@ -24,7 +27,4 @@ steps:
   - --source=.
   - --trigger-http
   - --runtime=nodejs16
-  options:
-    logsBucket: 'gs://_Default'
-    logging: GCS_ONLY 
 
