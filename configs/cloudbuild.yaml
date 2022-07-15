@@ -16,6 +16,8 @@ steps:
   # logsBucket: 'gs://_Default'
   # options:
   #   logging: CLOUD_LOGGING_ONLY 
+  build:
+    logsBucket: 'gs://_Default'
   args:
   - gcloud
   - functions
