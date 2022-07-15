@@ -1,10 +1,10 @@
 steps:
 
-- name: 'https://console.cloud.google.com/gcr/images/cloud-builders/GLOBAL/git'
- args: ['clone', 'https://github.com/Arehman52/wowhealth-cf-be']
+# - name: 'https://console.cloud.google.com/gcr/images/cloud-builders/GLOBAL/git'
+#  args: ['clone', 'https://github.com/Arehman52/wowhealth-cf-be']
 
-- name: 'gcr.io/cloud-builders/git'
- args: ['pull','origin','master']
+# - name: 'gcr.io/cloud-builders/git'
+#  args: ['pull','origin','master']
 
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
