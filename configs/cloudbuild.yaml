@@ -11,6 +11,14 @@ steps:
   entrypoint: /bin/bash
   args: ['init']
 
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: /bin/bash
+  args: ['clone','https://github.com/Arehman52/wowhealth-cf-be.git']
+
+- name: 'gcr.io/cloud-builders/npm'
+  entrypoint: /bin/
+  args: ['install']
+
 #     - -c
 #     - |
 #         # Cloud Build doesn't recover the .git file. Thus checkout the repo for this
