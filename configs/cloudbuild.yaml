@@ -17,8 +17,8 @@ steps:
   #   logsBucket: 'gs://_Default'
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  options:
-    logging: CLOUD_LOGGING_ONLY
+  # options:
+  logging: CLOUD_LOGGING_ONLY
   args:
   - gcloud
   - functions
