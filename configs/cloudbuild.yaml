@@ -1,7 +1,7 @@
 steps:
 - name: 'bash'
   args: ['echo', 'Hello world!']
-logsBucket: '_Default'
+logsBucket: 'gs://_Default'
 serviceAccount: 'projects/PROJECT_ID/serviceAccounts/SERVICE_ACCOUNT'
 options:
   logging: GCS_ONLY
