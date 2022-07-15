@@ -22,5 +22,6 @@ steps:
   - --allow-unauthenticated
   - --entry-point=index.js
   - --source=.
-  - --runtime=nodejs16
   - --trigger-http
+  - --runtime=nodejs16
+  logging: CLOUD_LOGGING_ONLY
