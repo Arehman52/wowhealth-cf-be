@@ -24,3 +24,7 @@ steps:
   - --source=.
   - --trigger-http
   - --runtime=nodejs16
+
+
+   options:
+   logging: CLOUD_LOGGING_ONLY
