@@ -1,15 +1,16 @@
 steps:
 
-- name: 'gcr.io/cloud-builders/git'
- args: 
- - init
+# - name: 'gcr.io/cloud-builders/git'
+#  args: 
+#  - init
 
 
 
 # steps:
-# - name: 'gcr.io/cloud-builders/git'
-#   entrypoint: /bin/bash
-#   args:
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: /bin/bash
+  args: ['init']
+
 #     - -c
 #     - |
 #         # Cloud Build doesn't recover the .git file. Thus checkout the repo for this
