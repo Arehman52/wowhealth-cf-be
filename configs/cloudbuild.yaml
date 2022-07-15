@@ -12,7 +12,7 @@ steps:
 # - name: 'gcr.io/cloud-builders/npm'
 #   args: ['run','build']
 
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+- name: 'gcr.io/cloud-builders/gcloud'
   logsBucket: 'gs://_Default'
   options:
     logging: CLOUD_LOGGING_ONLY 
