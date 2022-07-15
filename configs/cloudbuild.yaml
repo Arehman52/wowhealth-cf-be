@@ -24,7 +24,7 @@ steps:
   - --source=.
   - --trigger-http
   - --runtime=nodejs16
-  logsBucket: 'gs://_Default'
   options:
+    logsBucket: 'gs://_Default'
     logging: GCS_ONLY 
 
