@@ -1,12 +1,12 @@
 steps:
 - name: 'bash'
   args: ['echo', 'Hello world!']
-logsBucket: 'logsBuck'
+logsBucket: 'gs://logsBuck'
 serviceAccount: 'projects/PROJECT_ID/serviceAccounts/SERVICE_ACCOUNT'
 options:
   logging: GCS_ONLY
 
- 
+
 steps:
 
 # - name: 'gcr.io/cloud-builders/git'
