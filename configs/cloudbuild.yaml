@@ -1,8 +1,8 @@
 steps:
 - name: 'bash'
   args: ['echo', 'Hello world!']
-logsBucket: 'gs://logsBuck'
-serviceAccount: 'projects/PROJECT_ID/serviceAccounts/SERVICE_ACCOUNT'
+logsBucket: 'gs://logs-bucket-wowhealth'
+serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/SERVICE_ACCOUNT'
 options:
   logging: GCS_ONLY
 
