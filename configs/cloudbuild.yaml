@@ -8,7 +8,7 @@ options:
   logging: GCS_ONLY
 
 
-steps:
+# steps:
 
 # - name: 'gcr.io/cloud-builders/git'
 #  args: 
@@ -34,7 +34,7 @@ steps:
   entrypoint: 'npm'
   args: ['-v']
 
-steps:
+# steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['install']
