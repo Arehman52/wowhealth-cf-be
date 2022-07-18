@@ -63,16 +63,16 @@ steps:
   # build:
   #   logsBucket: 'gs://_Default'
 
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args:
-#   - gcloud
-#   - functions
-#   - deploy
-#   - wowhealth-nodejs-function #functionName
-#   - --region=us-central1
-#   - --allow-unauthenticated
-#   - --entry-point=index.js
-#   - --source=.
-#   - --trigger-http 
-#   - --runtime=nodejs16
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - wowhealth-nodejs-function
+  - --region=us-central1
+  - --allow-unauthenticated
+  - --entry-point=index.js
+  - --source=.
+  - --trigger-http 
+  - --runtime=nodejs16
 
