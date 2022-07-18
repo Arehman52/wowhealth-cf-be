@@ -29,13 +29,15 @@ steps:
 #   - sdsadasdsadadasdadasdasdasd
 #   args: ['install']
 
+steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['-v']
-  args: ['install']
 
-# - name: 'node'
-#   entrypoint: 'npm'
+steps:
+- name: 'node'
+  entrypoint: 'npm'
+  args: ['install']
 
 #     - -c
 #     - |
