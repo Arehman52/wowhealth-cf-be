@@ -22,7 +22,6 @@ steps:
 #   args: ['init']
 
 - name: 'gcr.io/cloud-builders/git'
-  entrypoint: /bin/bash
   args: ['clone','https://github.com/Arehman52/wowhealth-cf-be.git']
 
 # - name: 'gcr.io/cloud-builders/npm'
