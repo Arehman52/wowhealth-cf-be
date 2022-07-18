@@ -1,13 +1,13 @@
 steps:
-- name: 'bash'
-  args: ['echo', 'Hello world!']
-logsBucket: 'gs://logs-bucket-wowhealth'
-serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/SERVICE_ACCOUNT'
-options:
-  logging: GCS_ONLY
+# - name: 'bash'
+#   args: ['echo', 'Hello world!']
+# logsBucket: 'gs://logs-bucket-wowhealth'
+# serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/SERVICE_ACCOUNT'
+# options:
+#   logging: GCS_ONLY
 
 
-steps:
+# steps:
 
 # - name: 'gcr.io/cloud-builders/git'
 #  args: 
