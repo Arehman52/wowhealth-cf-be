@@ -32,6 +32,10 @@ steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['-v']
+  args: ['install']
+
+# - name: 'node'
+#   entrypoint: 'npm'
 
 #     - -c
 #     - |
@@ -70,5 +74,6 @@ steps:
   - --allow-unauthenticated
   - --entry-point=index.js
   - --source=.
+  - --trigger-http 
   - --runtime=nodejs16
 
