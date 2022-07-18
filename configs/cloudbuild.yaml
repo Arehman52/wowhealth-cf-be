@@ -65,6 +65,5 @@ steps:
   - --allow-unauthenticated
   - --entry-point=index.js
   - --source=.
-  - --trigger-http
   - --runtime=nodejs16
 
