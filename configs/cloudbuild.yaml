@@ -1,14 +1,9 @@
 steps:
-- name: 'node'
+- name: '============================::::::::::::::::::  node'
   entrypoint: 'npm'
   args: ['-v']
-logsBucket: 'gs://logs-bucket-wowhealth'
-serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/SERVICE_ACCOUNT'
-options:
-  logging: GCS_ONLY
 
 
-steps:
 
 # - name: 'gcr.io/cloud-builders/git'
 #  args: 
@@ -28,13 +23,10 @@ steps:
 #   description: | 
 #   - sdsadasdsadadasdadasdasdasd
 #   args: ['install']
-
-steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['-v']
 
-steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['install']
