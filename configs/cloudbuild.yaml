@@ -1,6 +1,6 @@
 steps:
 - name: 'node'
-    entrypoint: 'npm'
+  entrypoint: 'npm'
     args: ['-v']
     logsBucket: 'gs://logs-bucket-wowhealth'
     serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/wowhealth-nodejs@appspot.gserviceaccount.com'
