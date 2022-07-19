@@ -5,7 +5,7 @@ steps:
   # logsBucket: 'gs://logs-bucket-wowhealth'
   serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/wowhealth-nodejs@appspot.gserviceaccount.com'
   # options:
-  logging: GCS_ONLY
+  # logging: GCS_ONLY
 
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone','https://github.com/Arehman52/wowhealth-cf-be.git']
