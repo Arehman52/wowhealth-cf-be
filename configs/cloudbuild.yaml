@@ -17,7 +17,7 @@ steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['install']
-  logsBucket: 'gs://logs-bucket-wowhealth'
+  # logsBucket: 'gs://logs-bucket-wowhealth'
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
