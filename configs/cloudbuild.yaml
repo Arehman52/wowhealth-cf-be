@@ -6,63 +6,15 @@ logsBucket: 'gs://logs-bucket-wowhealth'
 serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/SERVICE_ACCOUNT'
 options:
   logging: GCS_ONLY
-
-
-steps:
-
-# - name: 'gcr.io/cloud-builders/git'
-#  args: 
-#  - init
-
-
-
-# steps:
-# - name: 'gcr.io/cloud-builders/git'
-#   entrypoint: /bin/bash
-#   args: ['init']
+  
 
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone','https://github.com/Arehman52/wowhealth-cf-be.git']
-
-# - name: 'gcr.io/cloud-builders/npm'
-#   description: | 
-#   - sdsadasdsadadasdadasdasdasd
-#   args: ['install']
-
-steps:
-- name: 'node'
-  entrypoint: 'npm'
-  args: ['-v']
-
-steps:
+  
 - name: 'node'
   entrypoint: 'npm'
   args: ['install']
-
-#     - -c
-#     - |
-#         # Cloud Build doesn't recover the .git file. Thus checkout the repo for this
-#         git clone --branch master https://github.com/Arehman52/wowhealth-cf-be.git /tmp/repo ;
-#         # Copy only the .git file
-#         mv /tmp/repo/.git .
-
-
-
-
-
-# - name: 'gcr.io/cloud-builders/git'
-#  args: ['pull','origin','master']
-
-# - name: 'gcr.io/cloud-builders/npm'
-#   args: ['install']
-
-# - name: 'gcr.io/cloud-builders/npm'
-#   args: ['run','build']
-
-  # logsBucket: 'gs://_Default'
-  # build:
-  #   logsBucket: 'gs://_Default'
-
+  
 - name: 'gcr.io/cloud-builders/gcloud'
   args: [
   'functions',
