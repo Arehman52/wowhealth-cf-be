@@ -3,6 +3,20 @@ const router = express.Router();
 import ejs from 'ejs';
 import FormI from '../models/form.model.js';
 
+import mysql from 'mysql2';
+
+
+var con = mysql.createConnection({
+  host: "35.210.208.100",
+  user: "devuser",
+  password: "devuser@339"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 
 
 const USERS = [
@@ -105,7 +119,32 @@ router.get("/getUsers/getPeeps", (req, res, next) => {
 });
 
 router.get("/", (req, res, next) => {
-  res.status(200).send("Navigating on root level US");
+  
+  // const connection = mysql.createConnection({
+  //   host: '35.210.208.100',
+  //   user: 'devuser',
+  //   password: 'devuser@339',
+  //   database: 'wowpk_dev'
+  // });
+  
+  // simple query
+  connection.query(
+    'select * from `tbl_appointment_history`',
+    function(err, results, fields) {
+      if(err) console.log(err);
+      // console.log(results); // results contains rows returned by server
+      // console.log(fields); // fields contains extra meta data about results, if available
+      // // res.send(JSON.stringify(results));
+      try {
+        res.send(results);
+      } catch (error) {
+        console.log(error)
+        res.send(error+'');
+
+      }
+    }
+  );
+
 });
 
 export default router;
