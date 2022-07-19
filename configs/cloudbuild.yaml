@@ -3,9 +3,12 @@ steps:
   entrypoint: 'npm'
   args: ['-v']
 logsBucket: 'gs://logs-bucket-wowhealth'
-serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/wowhealth-nodejs@appspot.gserviceaccount.com'
+serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/SERVICE_ACCOUNT'
 options:
   logging: GCS_ONLY
+
+
+steps:
 
 # - name: 'gcr.io/cloud-builders/git'
 #  args: 
@@ -26,12 +29,12 @@ options:
 #   - sdsadasdsadadasdadasdasdasd
 #   args: ['install']
 
-
+steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['-v']
 
-
+steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['install']
@@ -60,6 +63,16 @@ options:
   # build:
   #   logsBucket: 'gs://_Default'
 
-- name: 'gcr.io/cloud-builders/gcloud' 
-  args: ['functions', 'deploy', 'wowhealth-nodejs-function', '--region=us-central1', '--allow-unauthenticated', '--entry-point=index.js', '--source=.', '--trigger-http', '--runtime=nodejs16']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - wowhealth-nodejs-function
+  - --region=us-central1
+  - --allow-unauthenticated
+  - --entry-point=index.js
+  - --source=.
+  - --trigger-http 
+  - --runtime=nodejs16
 
