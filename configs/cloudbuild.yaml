@@ -2,7 +2,7 @@ steps:
 - name: 'node'
   entrypoint: 'npm'
   args: ['-v']
-  logsBucket: 'gs://logs-bucket-wowhealth'
+  # logsBucket: 'gs://logs-bucket-wowhealth'
   serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/wowhealth-nodejs@appspot.gserviceaccount.com'
   # options:
   logging: GCS_ONLY
