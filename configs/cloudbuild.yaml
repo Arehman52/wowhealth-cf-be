@@ -4,8 +4,8 @@ steps:
   args: ['-v']
   logsBucket: 'gs://logs-bucket-wowhealth'
   serviceAccount: 'projects/wowhealth-nodejs/serviceAccounts/wowhealth-nodejs@appspot.gserviceaccount.com'
-  options:
-    logging: GCS_ONLY
+  # options:
+  #   logging: GCS_ONLY
 
 # - name: 'gcr.io/cloud-builders/git'
 #  args: 
