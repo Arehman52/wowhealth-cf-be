@@ -62,7 +62,7 @@ steps:
   # logsBucket: 'gs://_Default'
   # build:
   #   logsBucket: 'gs://_Default'
-
+ 
 - name: 'gcr.io/cloud-builders/gcloud'
   args: [
   'functions',
