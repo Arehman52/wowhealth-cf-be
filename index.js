@@ -11,7 +11,7 @@ var str = 'CONNECTING...';
 mongoose.connect("mongodb+srv://abdurrehman:MvceaEr8JnRkWkl7@cluster0.jlslm.mongodb.net/GBCLDatabse",{ useNewUrlParser: true,
 useUnifiedTopology: true })
   .then(() => {
-    console.log("Connected to DB.");
+    console.log("Connected to MongoDB.");
     str = "CONNECTED";
   })
   .catch((err) => {
@@ -24,19 +24,19 @@ useUnifiedTopology: true })
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
-//   res.setHeader("Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader("Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept");
 
 
-//   res.setHeader("Access-Control-Allow-Methods",
-//     "GET, POST, PATCH, PUT, DELETE, OPTIONS");
-//     res.setHeader("Access-Control-Allow-Credentials", "true");
-//   next();
+  res.setHeader("Access-Control-Allow-Methods",
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
 
-// });
+});
 
 
 app.get("/", (req, res, next) => {
