@@ -2,7 +2,6 @@ import express from 'express';
 const router = express.Router();
 import ejs from 'ejs';
 import FormI from '../models/form.model.js';
-
 import mysql from 'mysql2';
 
 
@@ -29,6 +28,97 @@ export const GenericResponseObject = {
   }
 }
 
+router.get("/getAppointmentsHistory", (req, res, next) => {
+  var offset = (req.query.pageNumber - 1) * req.query.numberOfRecordsPerPage;
+  var endingLimit = req.query.numberOfRecordsPerPage * req.query.pageNumber;
+  var filterBy = req.query.filterBy; 
+  var q = req.query.q;  
+  var startDate = req.query.startDate;
+  var endDate = req.query.endDate; 
+  var sql = "SELECT * FROM `vw_vuc_appointments` WHERE AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"';";
+  if(filterBy && q != ''){
+    sql = "SELECT * FROM `vw_vuc_appointments` WHERE "+ filterBy +" LIKE '%"+ q +"%' AND AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"' LIMIT "+offset+";";
+  }
+  // if(q != ''){
+    // sql = "SELECT * FROM `vw_vuc_appointments` WHERE "+ filterBy +" LIKE '%"+ q +"%' AND AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"' LIMIT "+offset+";";
+  // }
+  console.log(sql);
+  console.log(req.query);
+
+  var con = mysql.createConnection({
+      host: "35.211.1.9",
+      user: "devuser",
+      password: "7BTxmYL5RpfOeDSO",
+      port:3306,
+      database: 'wowhealth_dev',
+      uri:"jdbc:mysql://35.211.1.9:3306/wowhealth_dev",
+    });
+  
+  con.connect(function(err) {
+    GenericResponseObject.status.tokenExpired = false;
+    GenericResponseObject.status.contextID = 'not available';
+    if (err)
+    {
+      GenericResponseObject.status.message = "ERROR: unknown reason!";
+      GenericResponseObject.status.result = err;
+      res.status(301).send(GenericResponseObject);
+    }
+    console.log("Connected!");
+  });
+
+  con.query( sql, function(err, results, fields) {
+    console.log("====================================== results.length :",results.length);
+    GenericResponseObject.pagination.pageNumber = req.query.pageNumber;
+    GenericResponseObject.pagination.totalNumberOfRecords = results.length;
+    GenericResponseObject.pagination.totalNumberOfPages = Math.ceil(results.length / GenericResponseObject.pagination.numberOfRecordsPerPage);
+      if(err) {
+        GenericResponseObject.status.message = "ERROR: Error or incorrect SQL query or API";
+        GenericResponseObject.status.result = err;
+        res.status(301).send(GenericResponseObject);
+        }
+      try {        
+        GenericResponseObject.data = [...results];
+        res.status(200).send(GenericResponseObject);
+      } catch (error) {
+        GenericResponseObject.status.message = "ERROR: Error Occured Due to an Exception";
+        GenericResponseObject.status.result = error;
+        res.status(301).send(GenericResponseObject);
+      }
+    }
+  );
+
+});
+
+export function mapper(response, mappingConfigs) {
+  var mapped = [];
+  if (response) {
+    response.forEach((value, index, array) => {
+      let obj = {};
+      Object.keys(mappingConfigs).forEach((key) => {
+        if(value.hasOwnProperty(key)){
+          obj[mappingConfigs[key]] = value[key];
+        }
+      });
+      mapped.push(obj);
+    });
+  }
+  return mapped;
+}
+
+
+
+
+
+
+//=================================//=================================//=================================//=================================
+//=================================//=================================//=================================//=================================
+//=================================//=================================//=================================//=================================
+//=================================//=============                                          =============//=================================
+//=================================//=============            USELESS CODE BELOW            =============//=================================
+//=================================//=============                                          =============//=================================
+//=================================//=================================//=================================//=================================
+//=================================//=================================//=================================//=================================
+//=================================//=================================//=================================//=================================
 
 
 
@@ -124,83 +214,6 @@ router.get("/getUsers/getPeeps", (req, res, next) => {
 });
 
 
-
-router.get("/getAppointmentsHistory", (req, res, next) => {
-  var offset = (req.query.pageNumber - 1) * req.query.numberOfRecordsPerPage;
-  var endingLimit = req.query.numberOfRecordsPerPage * req.query.pageNumber;
-  var filterBy = req.query.filterBy; 
-  var q = req.query.q;
-  var startDate = req.query.startDate;
-  var endDate = req.query.endDate;
-  var sql = "SELECT * FROM `vw_vuc_appointments` WHERE AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"';";
-  if(filterBy && q != ''){
-    sql = "SELECT * FROM `vw_vuc_appointments` WHERE "+ filterBy +" LIKE '%"+ q +"%' AND AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"';";
-  }
-  // if(q != ''){
-  //   // sql = "SELECT * FROM `vw_vuc_appointments` WHERE "+ filterBy +" LIKE '%"+ q +"%' AND AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"' LIMIT "+offset+","+endingLimit+";";
-  // }
-  console.log(sql);
-  console.log(req.query);
-
-  var con = mysql.createConnection({
-      host: "35.211.1.9",
-      user: "devuser",
-      password: "7BTxmYL5RpfOeDSO",
-      port:3306,
-      database: 'wowhealth_dev',
-      uri:"jdbc:mysql://35.211.1.9:3306/wowhealth_dev",
-    });
-  
-  con.connect(function(err) {
-    GenericResponseObject.status.tokenExpired = false;
-    GenericResponseObject.status.contextID = 'not available';
-    if (err)
-    {
-      GenericResponseObject.status.message = "ERROR: unknown reason!";
-      GenericResponseObject.status.result = err;
-      res.status(301).send(GenericResponseObject);
-    }
-    console.log("Connected!");
-  });
-
-  con.query( sql, function(err, results, fields) {
-    console.log("====================================== results.length :",results.length);
-    GenericResponseObject.pagination.pageNumber = req.query.pageNumber;
-    GenericResponseObject.pagination.totalNumberOfRecords = results.length;
-    GenericResponseObject.pagination.totalNumberOfPages = Math.ceil(results.length / GenericResponseObject.pagination.numberOfRecordsPerPage);
-      if(err) {
-        GenericResponseObject.status.message = "ERROR: Error or incorrect SQL query or API";
-        GenericResponseObject.status.result = err;
-        res.status(301).send(GenericResponseObject);
-        }
-      try {        
-        GenericResponseObject.data = [...results];
-        res.status(200).send(GenericResponseObject);
-      } catch (error) {
-        GenericResponseObject.status.message = "ERROR: Error Occured Due to an Exception";
-        GenericResponseObject.status.result = error;
-        res.status(301).send(GenericResponseObject);
-      }
-    }
-  );
-
-});
-
-export function mapper(response, mappingConfigs) {
-  var mapped = [];
-  if (response) {
-    response.forEach((value, index, array) => {
-      let obj = {};
-      Object.keys(mappingConfigs).forEach((key) => {
-        if(value.hasOwnProperty(key)){
-          obj[mappingConfigs[key]] = value[key];
-        }
-      });
-      mapped.push(obj);
-    });
-  }
-  return mapped;
-}
 
 
 
