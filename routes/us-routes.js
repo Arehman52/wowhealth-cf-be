@@ -126,24 +126,29 @@ router.get("/getUsers/getPeeps", (req, res, next) => {
 
 
 router.get("/getAppointmentsHistory", (req, res, next) => {
-  // SELECT * FROM tbl LIMIT 5,10;  # Retrieve rows 6-15
   var offset = (req.query.pageNumber - 1) * req.query.numberOfRecordsPerPage;
-  var sql = '';
-  if(req.query.q != ''){
-    sql = 'SELECT * FROM `tbl_appointment_history` WHERE ser_appointment_history_id LIKE "%'+req.query.q+'%"';
-  }else{
-    sql = 'select * from `tbl_appointment_history` LIMIT '+offset+','+(req.query.numberOfRecordsPerPage * req.query.pageNumber);
+  var endingLimit = req.query.numberOfRecordsPerPage * req.query.pageNumber;
+  var filterBy = req.query.filterBy; 
+  var q = req.query.q;
+  var startDate = req.query.startDate;
+  var endDate = req.query.endDate;
+  var sql = "SELECT * FROM `vw_vuc_appointments` WHERE AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"';";
+  if(filterBy && q != ''){
+    sql = "SELECT * FROM `vw_vuc_appointments` WHERE "+ filterBy +" LIKE '%"+ q +"%' AND AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"';";
   }
+  // if(q != ''){
+  //   // sql = "SELECT * FROM `vw_vuc_appointments` WHERE "+ filterBy +" LIKE '%"+ q +"%' AND AppointmentDate > '"+startDate+"' AND AppointmentDate < '"+endDate+"' LIMIT "+offset+","+endingLimit+";";
+  // }
   console.log(sql);
   console.log(req.query);
 
   var con = mysql.createConnection({
-      host: "35.210.208.100",
+      host: "35.211.1.9",
       user: "devuser",
-      password: "devuser@339",
+      password: "7BTxmYL5RpfOeDSO",
       port:3306,
-      database: 'wowpk_dev',
-      uri:"jdbc:mysql://35.210.208.100:3306/wowpkdev",
+      database: 'wowhealth_dev',
+      uri:"jdbc:mysql://35.211.1.9:3306/wowhealth_dev",
     });
   
   con.connect(function(err) {
@@ -159,29 +164,17 @@ router.get("/getAppointmentsHistory", (req, res, next) => {
   });
 
   con.query( sql, function(err, results, fields) {
-    // results = [...results, ...results, ..  .results]
+    console.log("====================================== results.length :",results.length);
+    GenericResponseObject.pagination.pageNumber = req.query.pageNumber;
+    GenericResponseObject.pagination.totalNumberOfRecords = results.length;
+    GenericResponseObject.pagination.totalNumberOfPages = Math.ceil(results.length / GenericResponseObject.pagination.numberOfRecordsPerPage);
       if(err) {
         GenericResponseObject.status.message = "ERROR: Error or incorrect SQL query or API";
         GenericResponseObject.status.result = err;
         res.status(301).send(GenericResponseObject);
         }
-        GenericResponseObject.pagination.totalNumberOfRecords = results.length;
-        GenericResponseObject.pagination.totalNumberOfPages = Math.ceil(results.length / GenericResponseObject.pagination.numberOfRecordsPerPage);
-        
-        
-
-
-      let mappingConfigs = {
-        "ser_appointment_history_id": "appointmentHistoryId",
-        "txt_operation_name" : "operationName",
-        "dte_date" : "dte_date",
-        "fk_appointment_id" : "appointmentId",
-        "txt_details" : "details",
-        "fk_user_id" : "userId"
-      }
-      let mappedDataa = mapper(results,mappingConfigs);
       try {        
-        GenericResponseObject.data = [...mappedDataa];
+        GenericResponseObject.data = [...results];
         res.status(200).send(GenericResponseObject);
       } catch (error) {
         GenericResponseObject.status.message = "ERROR: Error Occured Due to an Exception";
@@ -240,3 +233,46 @@ export default router;
       //   "userId" : value['fk_user_id']
       // };
     // });
+
+
+
+
+    //dev US
+  // var con = mysql.createConnection({
+  //   host: "35.210.208.100",
+  //   user: "devuser",
+  //   password: "devuser@339",
+  //   port:3306,
+  //   database: 'wowpk_dev',
+  //   uri:"jdbc:mysql://35.210.208.100:3306/wowpkdev",
+  // });
+
+
+
+
+
+
+// AppointmentAmount: 100
+// AppointmentDate: "2022-04-06T00:29:35.000Z"
+// CancellationReason: null
+// Email: "Andrew@gmail.com"
+// ExternalIntakeId: "1480-2650-3290-1576227865588"
+// FirstName: "andrew"
+// LastName: "david"
+// MemdLastStatus: "Visit Canceled"
+// MobileNumber: "3333333333"
+// PaymentMethod: null
+
+
+
+
+
+// let mappingConfigs = {
+//   "ser_appointment_history_id": "appointmentHistoryId",
+//   "txt_operation_name" : "operationName",
+//   "dte_date" : "dte_date",
+//   "fk_appointment_id" : "appointmentId",
+//   "txt_details" : "details",
+//   "fk_user_id" : "userId"
+// }
+// let mappedDataa = mapper(results,mappingConfigs);
